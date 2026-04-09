@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+printf '%s\n' 'Plugin Repository: https://github.com/eratio08/asdf-sky'
+printf '%s\n' 'Sky Repository: https://github.com/anzellai/sky'
+printf '%s\n' 'Sky Documentation: https://sky-lang.org'
