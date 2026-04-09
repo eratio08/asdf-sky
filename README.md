@@ -15,19 +15,18 @@
 
 # Dependencies
 
-**TODO: adapt this section**
-
-- `bash`, `curl`, `tar`, and [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
-- `SOME_ENV_VAR`: set this environment variable in your shell config to load the correct version of tool x.
+- `bash`, `curl`, `git`, and standard [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
+- `GITHUB_API_TOKEN` is optional, but recommended in CI to avoid GitHub rate limits when listing versions.
+- `go` is not required to install the `sky` CLI with this plugin, but it is required for normal `sky` workflows because Sky compiles to Go.
 
 # Install
 
 Plugin:
 
 ```shell
-asdf plugin add sky
-# or
 asdf plugin add sky https://github.com/eratio08/asdf-sky.git
+# or use the short name once the plugin is indexed
+asdf plugin add sky
 ```
 
 sky:

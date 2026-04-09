@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+printf '%s\n' 'Installs the official sky CLI from GitHub release binaries so it can be managed by asdf.'
