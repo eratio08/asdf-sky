@@ -5,6 +5,7 @@ set -euo pipefail
 GH_REPO="https://github.com/anzellai/sky"
 TOOL_NAME="sky"
 TOOL_TEST="sky --help"
+MIN_SUPPORTED_VERSION="0.8.1"
 
 fail() {
 	echo -e "asdf-$TOOL_NAME: $*"
@@ -32,6 +33,22 @@ filter_versions() {
 	fi
 }
 
+version_is_supported() {
+	local version=$1
+
+	[ "$(printf "%s\n%s\n" "$MIN_SUPPORTED_VERSION" "$version" | sort_versions | tail -n1)" = "$version" ]
+}
+
+filter_supported_versions() {
+	local version
+
+	while read -r version; do
+		if version_is_supported "$version"; then
+			printf "%s\n" "$version"
+		fi
+	done
+}
+
 list_github_tags() {
 	git ls-remote --tags --refs "$GH_REPO" |
 		grep -o 'refs/tags/.*' | cut -d/ -f3- |
@@ -39,7 +56,7 @@ list_github_tags() {
 }
 
 list_all_versions() {
-	list_github_tags
+	list_github_tags | filter_supported_versions
 }
 
 latest_stable_version() {
@@ -112,15 +129,19 @@ get_release_filename() {
 	printf "%s-%s-%s" "$TOOL_NAME" "$(get_platform)" "$(get_arch)"
 }
 
-download_release() {
+get_release_archive_filename() {
+	printf "%s.tar.gz" "$(get_release_filename)"
+}
+
+download_release_archive() {
 	local version filename url
 	version="$(resolve_version "$1")"
 	filename="$2"
 
-	url="$GH_REPO/releases/download/v${version}/$(get_release_filename)"
+	url="$GH_REPO/releases/download/v${version}/$(get_release_archive_filename)"
 
-	echo "* Downloading $TOOL_NAME release $version..."
-	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
+	echo "* Downloading $TOOL_NAME release $version archive..."
+	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "$TOOL_NAME $version does not provide a .tar.gz release asset. Older releases are not supported."
 }
 
 install_version() {
