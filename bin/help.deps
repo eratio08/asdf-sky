@@ -3,5 +3,6 @@
 printf '%s\n' 'bash'
 printf '%s\n' 'curl'
 printf '%s\n' 'git'
+printf '%s\n' 'tar'
 printf '%s\n' 'POSIX shell utilities'
 printf '%s\n' 'Go (required for typical sky build/run workflows after install)'

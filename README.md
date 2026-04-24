@@ -15,7 +15,7 @@
 
 # Dependencies
 
-- `bash`, `curl`, `git`, and standard [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
+- `bash`, `curl`, `git`, `tar`, and standard [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
 - `GITHUB_API_TOKEN` is optional, but recommended in CI to avoid GitHub rate limits when listing versions.
 - `go` is not required to install the `sky` CLI with this plugin, but it is required for normal `sky` workflows because Sky compiles to Go.
 
@@ -44,6 +44,8 @@ asdf global sky latest
 # Now sky commands are available
 sky --help
 ```
+
+Note: this plugin only supports upstream GitHub releases that publish `.tar.gz` assets. Older uncompressed release binaries are not supported and are excluded from `asdf list-all sky`.
 
 Check [asdf](https://github.com/asdf-vm/asdf) readme for more instructions on how to
 install & manage versions.

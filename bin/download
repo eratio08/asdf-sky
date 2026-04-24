@@ -10,7 +10,12 @@ source "${plugin_dir}/lib/utils.bash"
 
 mkdir -p "$ASDF_DOWNLOAD_PATH"
 
+release_archive="$ASDF_DOWNLOAD_PATH/$(get_release_archive_filename)"
 release_file="$ASDF_DOWNLOAD_PATH/$TOOL_NAME"
 
-download_release "$ASDF_INSTALL_VERSION" "$release_file"
+download_release_archive "$ASDF_INSTALL_VERSION" "$release_archive"
+tar -xzf "$release_archive" -C "$ASDF_DOWNLOAD_PATH" || fail "Could not extract $release_archive"
+rm "$release_archive"
+mv "$ASDF_DOWNLOAD_PATH/$(get_release_filename)" "$release_file" || fail "Could not stage $(get_release_filename)"
+
 chmod +x "$release_file"
